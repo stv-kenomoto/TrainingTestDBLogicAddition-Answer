@@ -33,8 +33,6 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    // TODO:
-    // 完了から削除、完了がない場合の画面
     [super viewWillAppear:animated];
     [self loadToDo];
 }
