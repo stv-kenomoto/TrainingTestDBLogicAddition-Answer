@@ -55,7 +55,6 @@
     NSArray<CloseHistory *> *closeHistories = [ToDoService closeHistories];
     if (closeHistories.count == 0) {
         [self.view addSubview:self.emptyClosedView];
-        
     } else {
         [self.emptyClosedView removeFromSuperview];
         self.dataSource = [[ClosedListViewDataSource alloc] initWithCloseHistories:[closeHistories mutableCopy]];
