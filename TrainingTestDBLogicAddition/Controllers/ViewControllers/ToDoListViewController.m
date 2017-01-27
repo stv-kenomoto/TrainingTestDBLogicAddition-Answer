@@ -50,12 +50,21 @@
     self.tableView.delegate = self;
 }
 
+- (void)addEmptyToDoView {
+    self.emptyToDoView.frame = self.view.frame;
+    [self.view addSubview:self.emptyToDoView];
+}
+
+- (void)removeEmptyClosedView {
+    [self.emptyToDoView removeFromSuperview];
+}
+
 - (void)loadToDo {
     NSArray<ToDo *> *todoList = [ToDoService todoList];
     if (todoList.count == 0) {
-        [self.view addSubview:self.emptyToDoView];
+        [self addEmptyToDoView];
     } else {
-        [self.emptyToDoView removeFromSuperview];
+        [self removeEmptyClosedView];
         self.dataSource = [[ToDoListViewDataSource alloc] initWithToDoList:[todoList mutableCopy]];
         self.tableView.dataSource = self.dataSource;
     }
@@ -78,7 +87,7 @@
     [self.dataSource.todoList removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     if (self.dataSource.todoList.count == 0) {
-        [self.view addSubview:self.emptyToDoView];
+        [self addEmptyToDoView];
     }
 }
 

@@ -43,12 +43,21 @@
     self.tableView.delegate = self;
 }
 
+- (void)addEmptyClosedView {
+    self.emptyClosedView.frame = self.view.frame;
+    [self.view addSubview:self.emptyClosedView];
+}
+
+- (void)removeEmptyClosedView {
+    [self.emptyClosedView removeFromSuperview];
+}
+
 - (void)loadToDo {
     NSArray<CloseHistory *> *closeHistories = [ToDoService closeHistories];
     if (closeHistories.count == 0) {
-        [self.view addSubview:self.emptyClosedView];
+        [self addEmptyClosedView];
     } else {
-        [self.emptyClosedView removeFromSuperview];
+        [self removeEmptyClosedView];
         self.dataSource = [[ClosedListViewDataSource alloc] initWithCloseHistories:[closeHistories mutableCopy]];
         self.tableView.dataSource = self.dataSource;
     }
@@ -58,7 +67,7 @@
     [self.dataSource.closeHistories removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     if (self.dataSource.closeHistories.count == 0) {
-        [self.view addSubview:self.emptyClosedView];
+        [self addEmptyClosedView];
     }
 }
 
