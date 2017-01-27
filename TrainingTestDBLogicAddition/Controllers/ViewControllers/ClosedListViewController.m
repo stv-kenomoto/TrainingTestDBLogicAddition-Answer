@@ -43,14 +43,6 @@
     self.tableView.delegate = self;
 }
 
-- (void)deleteToDoInTableViewWithIndexPath:(NSIndexPath *)indexPath {
-    [self.dataSource.closeHistories removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    if (self.dataSource.closeHistories.count == 0) {
-        [self.view addSubview:self.emptyClosedView];
-    }
-}
-
 - (void)loadToDo {
     NSArray<CloseHistory *> *closeHistories = [ToDoService closeHistories];
     if (closeHistories.count == 0) {
@@ -59,6 +51,14 @@
         [self.emptyClosedView removeFromSuperview];
         self.dataSource = [[ClosedListViewDataSource alloc] initWithCloseHistories:[closeHistories mutableCopy]];
         self.tableView.dataSource = self.dataSource;
+    }
+}
+
+- (void)deleteToDoInTableViewWithIndexPath:(NSIndexPath *)indexPath {
+    [self.dataSource.closeHistories removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (self.dataSource.closeHistories.count == 0) {
+        [self.view addSubview:self.emptyClosedView];
     }
 }
 

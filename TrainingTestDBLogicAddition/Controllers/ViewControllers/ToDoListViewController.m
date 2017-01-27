@@ -61,14 +61,6 @@
     }
 }
 
-- (void)deleteToDoInTableViewWithIndexPath:(NSIndexPath *)indexPath {
-    [self.dataSource.todoList removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    if (self.dataSource.todoList.count == 0) {
-        [self.view addSubview:self.emptyToDoView];
-    }
-}
-
 - (void)movoToRegister {
     ToDoEditViewController *todoEditViewController = [Storyboard instantiateWithName:StoryboardNameToDoEdit identifier:StoryboardIdToDoEdit];
     todoEditViewController.type = ToDoEditViewControllerTypeNew;
@@ -80,6 +72,14 @@
     todoEditViewController.type = ToDoEditViewControllerTypeEdit;
     todoEditViewController.todo = todo;
     [self.navigationController pushViewController:todoEditViewController animated:YES];
+}
+
+- (void)deleteToDoInTableViewWithIndexPath:(NSIndexPath *)indexPath {
+    [self.dataSource.todoList removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    if (self.dataSource.todoList.count == 0) {
+        [self.view addSubview:self.emptyToDoView];
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -108,7 +108,6 @@
                                                   }
                                               }]];
 }
-
 
 #pragma mark - EmptyViewDelegate
 - (void)emptyToDoView:(EmptyToDoView *)emptyToDoView didTouchButton:(UIButton *)button {
